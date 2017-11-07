@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.util.*;
 import org.xBaseJ.*;
+import org.xBaseJ.fields.*;
 
 public class SmDBF implements Closeable {
     private static final String enc = "windows-1252";
@@ -48,6 +49,16 @@ public class SmDBF implements Closeable {
         DbfApi api = new DBF(dbf.getAbsolutePath(), enc);
         try {
             api.write();
+        } finally {
+            api.close();
+        }
+    }
+
+    public void addField(Field field) throws Exception {
+        System.out.println("Adding field " + field.getName());
+        DbfApi api = new DBF(dbf.getAbsolutePath(), enc);
+        try {
+            api.addField(field);
         } finally {
             api.close();
         }
