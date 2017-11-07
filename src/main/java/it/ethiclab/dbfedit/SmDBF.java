@@ -45,7 +45,6 @@ public class SmDBF implements Closeable {
     }
 
     public void append() throws Exception {
-        System.out.println("TODO: should append a row");
         DbfApi api = new DBF(dbf.getAbsolutePath(), enc);
         try {
             api.write();
