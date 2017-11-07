@@ -44,9 +44,14 @@ public class SmDBF implements Closeable {
         }
     }
 
-    public void append() throws IOException {
+    public void append() throws Exception {
         System.out.println("TODO: should append a row");
-        // TODO
+        DbfApi api = new DBF(dbf.getAbsolutePath(), enc);
+        try {
+            api.write();
+        } finally {
+            api.close();
+        }
     }
 
     public int getRecCount() {
@@ -81,6 +86,8 @@ public class SmDBF implements Closeable {
             api.gotoRecord(record + 1);
             if (api.getField(n).isCharField() || api.getField(n).isMemoField()) {
                 api.getField(n).put((String) obj);
+            } else if (obj != null) {
+                api.getField(n).put(obj.toString());
             }
             api.update();
             System.out.println("value after set = " + api.getField(n).get());
